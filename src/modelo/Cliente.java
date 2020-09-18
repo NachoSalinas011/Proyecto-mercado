@@ -28,5 +28,8 @@ public class Cliente extends Actor{
 	public void setDni(int dni) {
 		this.dni = dni;
 	}
-	
+	@Override
+	public String toString() {
+		return "Cliente [apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni + "]";
+	}
 }

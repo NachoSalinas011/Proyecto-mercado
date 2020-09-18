@@ -1,5 +1,6 @@
 package modelo;
 import java.time.LocalTime;
+import java.util.List;
 import java.time.LocalDate;
 public class Carrito {
 	private int id;
@@ -8,10 +9,10 @@ public class Carrito {
 	private boolean cerrado;
 	private double descuento;
 	private Cliente cliente;
-	private ItemCarrito lstItemCarrito;
+	private List<ItemCarrito> lstItemCarrito;
 	private Entrega entrega;
 	public Carrito(int id, LocalDate fecha, LocalTime hora, boolean cerrado, double descuento, Cliente cliente,
-			ItemCarrito lstItemCarrito, Entrega entrega) {
+			List<ItemCarrito> lstItemCarrito, Entrega entrega) {
 		super();
 		this.id = id;
 		this.fecha = fecha;
@@ -58,10 +59,10 @@ public class Carrito {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public ItemCarrito getLstItemCarrito() {
+	public List<ItemCarrito> getLstItemCarrito() {
 		return lstItemCarrito;
 	}
-	public void setLstItemCarrito(ItemCarrito lstItemCarrito) {
+	public void setLstItemCarrito(List<ItemCarrito> lstItemCarrito) {
 		this.lstItemCarrito = lstItemCarrito;
 	}
 	public Entrega getEntrega() {
@@ -70,5 +71,10 @@ public class Carrito {
 	public void setEntrega(Entrega entrega) {
 		this.entrega = entrega;
 	}
-	
+	@Override
+	public String toString() {
+		return "Carrito [id=" + id + ", fecha=" + fecha + ", hora=" + hora + ", cerrado=" + cerrado + ", descuento="
+				+ descuento + ", cliente=" + cliente + ", lstItemCarrito=" + lstItemCarrito + ", entrega=" + entrega
+				+ "]";
+	}
 }

@@ -21,4 +21,12 @@ public class Actor {
 		this.contacto = contacto;
 	}
 	
+	@Override
+	public String toString() {
+		return "Actor [id=" + id + ", contacto=" + contacto + "]";
+	}
+	protected boolean validarIdentificadorUnico() {
+		//TODO
+		return true;
+	}
 }

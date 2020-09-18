@@ -1,5 +1,9 @@
 package modelo;
-
+import java.util.List;
+/**
+ * @author usuario1
+ *
+ */
 public class Comercio extends Actor {
 	private String nombreComercio;
 	private long cuit;
@@ -8,11 +12,12 @@ public class Comercio extends Actor {
 	private int diaDescuento;
 	private int porcentajeDescuentoDia;
 	private int porcentajeDescuentoEfectivo;
-	private DiaRetiro lstDiaRetiro;
-	private Carrito lstCarrito;
+	private List<DiaRetiro> lstDiaRetiro;
+	private List<Articulo> lstArticulo;
+	private List<Carrito> lstCarrito;
 	public Comercio(int id, Contacto contacto, String nombreComercio, long cuit, double costoFijo, double costoPorKm,
-			int diaDescuento, int porcentajeDescuentoDia, int porcentajeDescuentoEfectivo, DiaRetiro lstDiaRetiro,
-			Carrito lstCarrito) {
+			int diaDescuento, int porcentajeDescuentoDia, int porcentajeDescuentoEfectivo, List<DiaRetiro> lstDiaRetiro,
+			List<Articulo> lstArticulo, List<Carrito> lstCarrito) {
 		super(id, contacto);
 		this.nombreComercio = nombreComercio;
 		this.cuit = cuit;
@@ -22,6 +27,7 @@ public class Comercio extends Actor {
 		this.porcentajeDescuentoDia = porcentajeDescuentoDia;
 		this.porcentajeDescuentoEfectivo = porcentajeDescuentoEfectivo;
 		this.lstDiaRetiro = lstDiaRetiro;
+		this.lstArticulo = lstArticulo;
 		this.lstCarrito = lstCarrito;
 	}
 	public String getNombreComercio() {
@@ -66,17 +72,30 @@ public class Comercio extends Actor {
 	public void setPorcentajeDescuentoEfectivo(int porcentajeDescuentoEfectivo) {
 		this.porcentajeDescuentoEfectivo = porcentajeDescuentoEfectivo;
 	}
-	public DiaRetiro getLstDiaRetiro() {
+	public List<DiaRetiro> getLstDiaRetiro() {
 		return lstDiaRetiro;
 	}
-	public void setLstDiaRetiro(DiaRetiro lstDiaRetiro) {
+	public void setLstDiaRetiro(List<DiaRetiro> lstDiaRetiro) {
 		this.lstDiaRetiro = lstDiaRetiro;
 	}
-	public Carrito getLstCarrito() {
+	public List<Articulo> getLstArticulo() {
+		return lstArticulo;
+	}
+	public void setLstArticulo(List<Articulo> lstArticulo) {
+		this.lstArticulo = lstArticulo;
+	}
+	public List<Carrito> getLstCarrito() {
 		return lstCarrito;
 	}
-	public void setLstCarrito(Carrito lstCarrito) {
+	public void setLstCarrito(List<Carrito> lstCarrito) {
 		this.lstCarrito = lstCarrito;
 	}
-	
+	@Override
+	public String toString() {
+		return "Comercio [nombreComercio=" + nombreComercio + ", cuit=" + cuit + ", CostoFijo=" + CostoFijo
+				+ ", costoPorKm=" + costoPorKm + ", diaDescuento=" + diaDescuento + ", porcentajeDescuentoDia="
+				+ porcentajeDescuentoDia + ", porcentajeDescuentoEfectivo=" + porcentajeDescuentoEfectivo
+				+ ", lstDiaRetiro=" + lstDiaRetiro + ", lstArticulo=" + lstArticulo + ", lstCarrito=" + lstCarrito
+				+ "]";
+	}
 }
