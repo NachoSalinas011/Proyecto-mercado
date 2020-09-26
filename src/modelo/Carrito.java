@@ -77,4 +77,20 @@ public class Carrito {
 				+ descuento + ", cliente=" + cliente + ", lstItemCarrito=" + lstItemCarrito + ", entrega=" + entrega
 				+ "]";
 	}
+	
+	public double calcularTotalCarrito()
+	{
+		int tamanio= lstItemCarrito.size(); // Se inicializo el entero con el tamaño de la lista
+		double total=0; // Se inicializo el doble 
+		for (int i=0;i<tamanio;i++)
+		{
+			ItemCarrito item = lstItemCarrito.get(i); // Saca item i y lo guarda en un nuevo item 
+			int cantidad= item.getCantidad(); // Se guarda la cantidad del item i de la lista
+			Articulo itemArticulo = item.getArticulo(); // Se saca el Articulo del item i y se guarda en un nuevo articulo
+			double precio = itemArticulo.getPrecio(); //Se guarda el precio unitario del Articulo
+			total=total+(cantidad*precio); // Se calcula el precio total de cada item segun la cantidad del mismo
+			// mientras dure el bucle el total se acumula item a item
+		} // fin del bucle
+		return total;  //Se retorna el total calculado
+	}
 }
