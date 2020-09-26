@@ -4,11 +4,14 @@ public class Cliente extends Actor{
 	private String apellido;
 	private String nombre;
 	private int dni;
-	public Cliente(int id, Contacto contacto, String apellido, String nombre, int dni) {
+	private char sexo;
+
+	 public Cliente(int id, Contacto contacto, String apellido, String nombre, int dni, char sexo) {
 		super(id, contacto);
 		this.apellido = apellido;
 		this.nombre = nombre;
 		this.dni = dni;
+		this.sexo = sexo;
 	}
 	public String getApellido() {
 		return apellido;
@@ -28,8 +31,24 @@ public class Cliente extends Actor{
 	public void setDni(int dni) {
 		this.dni = dni;
 	}
+	public char getSexo() {
+		return sexo;
+	}
+	public void setSexo(char sexo) {
+		this.sexo = sexo;
+	}
 	@Override
 	public String toString() {
-		return "Cliente [apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni + "]";
+		return "Cliente [apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni + ", sexo=" + sexo + "]";
+	}
+	@Override
+	protected boolean validarIdentificadorUnico(int dni) {
+		String validar =  String.valueOf(dni);
+		boolean result = false;
+		if(validar.matches("[0-9]*"))
+		{
+			result = true;
+		}
+		return result;
 	}
 }

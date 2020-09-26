@@ -1,5 +1,4 @@
 package modelo;
-
 public class Actor {
 	private int id;
 	protected Contacto contacto;
@@ -25,8 +24,13 @@ public class Actor {
 	public String toString() {
 		return "Actor [id=" + id + ", contacto=" + contacto + "]";
 	}
-	protected boolean validarIdentificadorUnico() {
-		//TODO
-		return true;
+	protected boolean validarIdentificadorUnico(int id) { //Valida que el id ingresado sea puramente numerico
+		String validar =  String.valueOf(id);
+		boolean result = false;
+		if(validar.matches("[0-9]*"))
+		{
+			result = true;
+		}
+		return result;
 	}
 }
