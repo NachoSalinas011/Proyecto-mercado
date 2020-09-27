@@ -77,4 +77,34 @@ public class Carrito {
 				+ descuento + ", cliente=" + cliente + ", lstItemCarrito=" + lstItemCarrito + ", entrega=" + entrega
 				+ "]";
 	}
+	
+	public ItemCarrito traerItemCarrito(int idItem) { //Decidimos implementar esta funcion en caso de ser necesaria
+		ItemCarrito result = null;
+		for(ItemCarrito e : lstItemCarrito)
+		{
+			if(idItem == e.getArticulo().getId())
+			{
+				result = e;
+			}
+		}
+		return result;
+	}
+	public boolean agregar(Articulo articulo, int cantidad) {
+		boolean result = false;
+		ItemCarrito item = new ItemCarrito(articulo, cantidad); //Instancio un objeto ItemCarrito con los valores del parametro
+		for(ItemCarrito e: lstItemCarrito) //Para cada item de la lista
+		{
+			if(e.getArticulo().getId() == item.getArticulo().getId()) //Si el id del articulo que quiero EXISTE en la lista
+			{
+				e.setCantidad(e.getCantidad() + item.getCantidad()); //Aumento su cantidad
+				result = true; //Avisaré que la operación se realizó con exito
+			}
+		}
+		if(lstItemCarrito.contains(item) == false) //Si el articulo NO EXISTE en la lista
+		{
+			lstItemCarrito.add(item); //Lo agrego a la lista
+			result = true;
+		}
+		return result; //Devuelvo el resultado de la operaciòn
+	}
 }
