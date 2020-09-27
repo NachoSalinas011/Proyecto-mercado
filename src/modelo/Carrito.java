@@ -105,7 +105,7 @@ public class Carrito {
 			result = true;
 		}
 		return result; //Devuelvo el resultado de la operaciòn
-=======
+	}
 	public double calcularTotalCarrito()
 	{
 		int tamanio= lstItemCarrito.size(); // Se inicializo el entero con el tamaño de la lista
@@ -120,6 +120,5 @@ public class Carrito {
 			// mientras dure el bucle el total se acumula item a item
 		} // fin del bucle
 		return total;  //Se retorna el total calculado
->>>>>>> 17509ac1065941c976a91969a93b8504a71d8023
 	}
 }
