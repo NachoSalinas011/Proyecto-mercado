@@ -51,7 +51,10 @@ public class Carrito {
 		return descuento;
 	}
 	public void setDescuento(double descuento) {
-		this.descuento = descuento;
+		if (descuento>0)
+		{
+			this.descuento=descuento; //Solo se aplicará el descuento si el valor por parametro es mayor que 0
+		}	
 	}
 	public Cliente getCliente() {
 		return cliente;
@@ -121,4 +124,14 @@ public class Carrito {
 		} // fin del bucle
 		return total;  //Se retorna el total calculado
 	}
+	public double totalAPagarCarrito (double descuento) 
+	 {
+		double total=0; 
+		for (ItemCarrito item : lstItemCarrito) //Para cada item en la lista
+		{
+			total+= (item.getCantidad() * item.getArticulo().getPrecio());//Total += cantidad*precio de cada aritculo
+		} 
+		total-=descuento;//Se aplica el descuento correspondiente
+		return total;
+	 }
 }
