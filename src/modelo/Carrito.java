@@ -91,7 +91,7 @@ public class Carrito {
 		}
 		return result;
 	}
-	public boolean agregar(Articulo articulo, int cantidad) {
+	public boolean agregarItem(Articulo articulo, int cantidad) {
 		boolean result = false;
 		ItemCarrito item = new ItemCarrito(articulo, cantidad); //Instancio un objeto ItemCarrito con los valores del parametro
 		for(ItemCarrito e: lstItemCarrito) //Para cada item de la lista
@@ -108,6 +108,30 @@ public class Carrito {
 			result = true;
 		}
 		return result; //Devuelvo el resultado de la operaciòn
+	}
+	public boolean eliminarItem(Articulo articulo, int cantidad) { //Eliminar un articulo de la lista
+		boolean result = false;
+		int cant = 0;
+		ItemCarrito item = new ItemCarrito(articulo, cantidad); //Instancio un objeto ItemCarrito con los valores por parametro
+		for(ItemCarrito e : lstItemCarrito) //Para cada item de la lista
+		{
+			if(e.getArticulo().getId() == item.getArticulo().getId()) //Si el id del articulo se corresponde con el de la lista
+			{
+				cant = e.getCantidad() - item.getCantidad();//Calculo la cantidad
+				item = e; //Guardo el objeto en una variable auxiliar
+			}
+		}
+		if(cant <= 0)//Si la cantidad es menor o igual a 0
+		{
+			lstItemCarrito.remove(item);//Elimino el articulo de la lista
+			result = true;
+		}
+		if(cant > 0)
+		{
+			item.setCantidad(cant); //Sino, actualizo su cantidad 
+			result = true;
+		}
+		return result;
 	}
 	public double calcularTotalCarrito()
 	{
@@ -134,4 +158,48 @@ public class Carrito {
 		total-=descuento;//Se aplica el descuento correspondiente
 		return total;
 	 }
+	public double calcularDescuentoDia(int diaDescuento, double porcentajeDescuento) { //Devuelve un descuento calculado si es viernes
+		double descuento= 0, precioArticulo= 0;
+		int cant = 0, artDescuento = 0;
+		if(diaDescuento == 5)
+		{
+			for(ItemCarrito item : lstItemCarrito) //Para cada item del carrito
+			{
+				cant= item.getCantidad(); //Obtengo su cantidad
+				artDescuento= (int)Math.floor((cant+1)/2); //Calculo la cantidad de elementos que obtienen descuento de ese articulo
+				precioArticulo= item.getArticulo().getPrecio(); //Obtengo su precio
+				if(cant>1) //Si hay mas de 1 item del mismo articulo
+				{
+					descuento+= artDescuento * precioArticulo * porcentajeDescuento /100;//Calculo y sumo 
+				}
+			}
+		}
+		return descuento;//Devuelvo la suma de todos los descuentos por articulo
+	}
+	public double calcularDescuentoEfectivo(double porcentajeDescuentoEfectivo) {
+		double descuento = 0;
+		if(entrega.efectivo==true) {
+			double total = calcularTotalCarrito();
+			descuento = total*porcentajeDescuentoEfectivo /100;
+		}
+		return descuento;
+	}
+	public void calcularDescuentoCarrito(int diaDescuento, double porcentajeDescuento, double porcentajeDescuentoEfectivo) { //Determina cual sera el descuento mayot a aplicar
+		double descuentoDia =0, descuentoEfectivo =0, total=0;
+		descuentoDia = calcularDescuentoDia(diaDescuento, porcentajeDescuentoEfectivo);
+		descuentoEfectivo = calcularDescuentoEfectivo(porcentajeDescuentoEfectivo); //Calculamos los descuentos
+		if(descuentoDia > descuentoEfectivo)
+		{
+			total= descuentoDia;
+		}
+		if(descuentoDia < descuentoEfectivo)
+		{
+			total= descuentoEfectivo; //Se aplicará el mayor
+		}
+		if(descuentoDia == descuentoEfectivo)
+		{
+			total= descuentoDia;//En caso de ser iguales se aplicará uno solo
+		}
+		setDescuento(total);//Actualizo el descuento
+	}
 }
