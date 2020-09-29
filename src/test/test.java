@@ -3,8 +3,15 @@ package test;
 import modelo.Articulo;
 import modelo.Carrito;
 import modelo.ItemCarrito;
+import modelo.Ubicacion;
+import modelo.Cliente;
+import modelo.Contacto;
+import modelo.Entrega;
+
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.io.CharArrayReader;
 public class test {	
 	
@@ -27,8 +34,18 @@ public class test {
 		List<ItemCarrito> listaSuper = new ArrayList<ItemCarrito>();
 		listaSuper.add(producto1);
 		listaSuper.add(producto2);
-		listaSuper.add(producto3);
-		listaSuper.add(producto4);
+		
+		Ubicacion Casa = new Ubicacion (100,100);
+		Contacto contacto1 = new Contacto ("rociobtorres2000@gmail.com","1158208781",Casa);
+		Cliente Persona = new Cliente (14,contacto1,"Torres","Rocio",42522794,'F');
+		Entrega entrega1= new Entrega(14,LocalDate.now(),false);
+		
+		Carrito Changuito = new Carrito (14,LocalDate.now(),LocalTime.now(),true,50,Persona,listaSuper,entrega1);
+		
+		System.out.println("Total Carrito: " +Changuito.calcularTotalCarrito());
+		System.out.println("Total a pagar Carrito: " +Changuito.totalAPagarCarrito());		
+		System.out.println("Descuento por dia:" +Changuito.calcularDescuentoDia(5,50));
+		Changuito.calcularDescuentoCarrito(5, 20, 50);
 		
 	}
 }

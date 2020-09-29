@@ -148,16 +148,13 @@ public class Carrito {
 		} // fin del bucle
 		return total;  //Se retorna el total calculado
 	}
-	public double totalAPagarCarrito (double descuento) 
+	public double totalAPagarCarrito () 
 	 {
-		double total=0; 
-		for (ItemCarrito item : lstItemCarrito) //Para cada item en la lista
-		{
-			total+= (item.getCantidad() * item.getArticulo().getPrecio());//Total += cantidad*precio de cada aritculo
-		} 
-		total-=descuento;//Se aplica el descuento correspondiente
-		return total;
+		double total=calcularTotalCarrito(); //Se obtiene el total de carrito del metodo ya realizado
+		total= total*(getDescuento()/100); //se calcula el total descontandose el descuento 
+		return total; //retorna lo calculado
 	 }
+	
 	public double calcularDescuentoDia(int diaDescuento, double porcentajeDescuento) { //Devuelve un descuento calculado si es viernes
 		double descuento= 0, precioArticulo= 0;
 		int cant = 0, artDescuento = 0;
@@ -176,6 +173,7 @@ public class Carrito {
 		}
 		return descuento;//Devuelvo la suma de todos los descuentos por articulo
 	}
+	
 	public double calcularDescuentoEfectivo(double porcentajeDescuentoEfectivo) {
 		double descuento = 0;
 		if(entrega.efectivo==true) {
@@ -184,7 +182,8 @@ public class Carrito {
 		}
 		return descuento;
 	}
-	public void calcularDescuentoCarrito(int diaDescuento, double porcentajeDescuento, double porcentajeDescuentoEfectivo) { //Determina cual sera el descuento mayot a aplicar
+	
+	public void calcularDescuentoCarrito(int diaDescuento, double porcentajeDescuento, double porcentajeDescuentoEfectivo) { //Determina cual sera el descuento mayor a aplicar
 		double descuentoDia =0, descuentoEfectivo =0, total=0;
 		descuentoDia = calcularDescuentoDia(diaDescuento, porcentajeDescuentoEfectivo);
 		descuentoEfectivo = calcularDescuentoEfectivo(porcentajeDescuentoEfectivo); //Calculamos los descuentos
