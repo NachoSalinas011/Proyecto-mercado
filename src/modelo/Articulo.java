@@ -42,7 +42,7 @@ public class Articulo {
 	}
 	public double redondearMultiplo(double num, int multiplo) { //Metodo usado para realizar la validacion de codigo de barras
 		double resultado= 0;
-		if(num%10 == 0)
+		if(num%10 == 0)//Si el numero ya es multiplo de 10
 		{
 			resultado = num;
 		}else
@@ -51,9 +51,9 @@ public class Articulo {
 		}
 		return resultado;//Devuelve un numero redondeado a un multiplo, pasados por parametros
 	}
-	public boolean validarCodBarras (String codBarras) {
+	public boolean validarCodBarras () {
 		boolean result = false;
-		char[] arrayChar = codBarras.toCharArray(); //Lo pasamos a Array de char
+		char[] arrayChar = this.codBarras.toCharArray(); //Lo pasamos a Array de char
 		int digitoVerificador = Integer.parseInt(String.valueOf(arrayChar[arrayChar.length-1])); //El digito verificador obtenido por parametro
 		int sumaPar =0, sumaImpar=0, sumaTotal= 0;// Variables a usar
 		int digitoObtenido;

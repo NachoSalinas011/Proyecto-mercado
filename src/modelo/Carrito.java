@@ -50,7 +50,7 @@ public class Carrito {
 	public double getDescuento() {
 		return descuento;
 	}
-	public void setDescuento(double descuento) {
+	protected void setDescuento(double descuento) {
 		if (descuento>0)
 		{
 			this.descuento=descuento; //Solo se aplicará el descuento si el valor por parametro es mayor que 0
@@ -93,7 +93,7 @@ public class Carrito {
 	}
 	public boolean agregarItem(Articulo articulo, int cantidad) {
 		boolean result = false;
-		ItemCarrito item = new ItemCarrito(articulo, cantidad); //Instancio un objeto ItemCarrito con los valores del parametro
+		ItemCarrito item = new ItemCarrito(articulo, cantidad);//Instancio un objeto ItemCarrito con los valores del parametro
 		for(ItemCarrito e: lstItemCarrito) //Para cada item de la lista
 		{
 			if(e.getArticulo().getId() == item.getArticulo().getId()) //Si el id del articulo que quiero EXISTE en la lista
@@ -150,8 +150,11 @@ public class Carrito {
 	}
 	public double totalAPagarCarrito () 
 	 {
-		double total=calcularTotalCarrito(); //Se obtiene el total de carrito del metodo ya realizado
-		total= total*(getDescuento()/100); //se calcula el total descontandose el descuento 
+		double total=calcularTotalCarrito();//Se obtiene el total de carrito del metodo ya realizado
+		if(total > this.descuento)
+		{
+		total= total- this.descuento;//se calcula el total descontandose el descuento 
+		}
 		return total; //retorna lo calculado
 	 }
 	
@@ -163,7 +166,7 @@ public class Carrito {
 			for(ItemCarrito item : lstItemCarrito) //Para cada item del carrito
 			{
 				cant= item.getCantidad(); //Obtengo su cantidad
-				artDescuento= (int)Math.floor((cant+1)/2); //Calculo la cantidad de elementos que obtienen descuento de ese articulo
+				artDescuento= (int)Math.floor((cant)/2); //Calculo la cantidad de elementos que obtienen descuento de ese articulo
 				precioArticulo= item.getArticulo().getPrecio(); //Obtengo su precio
 				if(cant>1) //Si hay mas de 1 item del mismo articulo
 				{
@@ -185,19 +188,19 @@ public class Carrito {
 	
 	public void calcularDescuentoCarrito(int diaDescuento, double porcentajeDescuento, double porcentajeDescuentoEfectivo) { //Determina cual sera el descuento mayor a aplicar
 		double descuentoDia =0, descuentoEfectivo =0, total=0;
-		descuentoDia = calcularDescuentoDia(diaDescuento, porcentajeDescuentoEfectivo);
+		descuentoDia = calcularDescuentoDia(diaDescuento, porcentajeDescuento);
 		descuentoEfectivo = calcularDescuentoEfectivo(porcentajeDescuentoEfectivo); //Calculamos los descuentos
 		if(descuentoDia > descuentoEfectivo)
 		{
 			total= descuentoDia;
 		}
-		if(descuentoDia < descuentoEfectivo)
+		if(descuentoEfectivo > descuentoDia)
 		{
 			total= descuentoEfectivo; //Se aplicará el mayor
 		}
 		if(descuentoDia == descuentoEfectivo)
 		{
-			total= descuentoDia;//En caso de ser iguales se aplicará uno solo
+			total= descuentoEfectivo; //Si ambos son iguales se aplica el descuento por efectivo
 		}
 		setDescuento(total);//Actualizo el descuento
 	}

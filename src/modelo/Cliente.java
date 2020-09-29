@@ -45,9 +45,13 @@ public class Cliente extends Actor{
 	protected boolean validarIdentificadorUnico(int dni) {
 		String validar =  String.valueOf(dni);
 		boolean result = false;
-		if(validar.matches("[0-9]*"))
+		if(validar.matches("[0-9]*"))//Si contiene valores de 0 a 9
 		{
 			result = true;
+		}
+		if(validar.length() != 8) //Si la longitud no es valida
+		{
+			result = false;
 		}
 		return result;
 	}
