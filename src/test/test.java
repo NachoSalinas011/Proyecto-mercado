@@ -16,36 +16,39 @@ import java.io.CharArrayReader;
 public class test {	
 	
 	public static void main(String[] args) {
-		
 		// TODO Auto-generated method stub
-		//Caso de uso de una lista de ItemCarrito lista para ser usada a modo de ejemplo
-		Articulo a1 = new Articulo(1234, "Galleitas Oreo", "1234567891234", 60);
-		Articulo a2 = new Articulo(5678, "Papas Lays original", "9876543219876", 120);
-		Articulo a3 = new Articulo(9101, "Fernet Branca", "1011121314151", 450);
-		Articulo a4 = new Articulo(1112, "Servilletas Higienol", "2021222324252", 90);
-		Articulo a5 = new Articulo(1314, "Jabon en polvo Ace", "9991234567890", 150);
+		//Articulos en gondola
+		Articulo art1 = new Articulo(1234, "Galletitas Oreo 16U", "8414533043847", 60);
+		Articulo art2 = new Articulo(5678, "Fernet Branca 1L", "8412583512541", 450);
+		Articulo art3 = new Articulo(9102, "Glade Sensations Lavanda", "7785684512126", 120);
+		Articulo art4 = new Articulo(1112, "Servilletas Higienol 30M", "5901234123457", 90);
 		
-		ItemCarrito producto1 = new ItemCarrito(a1, 2);
-		ItemCarrito producto2 = new ItemCarrito(a2, 1);
-		ItemCarrito producto3 = new ItemCarrito(a3, 4);
-		ItemCarrito producto4 = new ItemCarrito(a4, 3);
-		ItemCarrito producto5 = new ItemCarrito(a5, 9);
+		//Items de carrito
+		ItemCarrito producto1 = new ItemCarrito(art1, 2);
+		ItemCarrito producto2 = new ItemCarrito(art2, 5);
+		ItemCarrito producto3 = new ItemCarrito(art3, 1);
+		ItemCarrito producto4 = new ItemCarrito(art4, 4);
 		
-		List<ItemCarrito> listaSuper = new ArrayList<ItemCarrito>();
-		listaSuper.add(producto1);
-		listaSuper.add(producto2);
+		//Listas de articulos
+		List<ItemCarrito>	lista1 = new ArrayList<ItemCarrito>();
+		lista1.add(producto1);
+		lista1.add(producto2);
+		List<ItemCarrito>	lista2 = new ArrayList<ItemCarrito>();
+		lista2.add(producto3);
+		lista2.add(producto4);
 		
-		Ubicacion Casa = new Ubicacion (100,100);
-		Contacto contacto1 = new Contacto ("rociobtorres2000@gmail.com","1158208781",Casa);
-		Cliente Persona = new Cliente (14,contacto1,"Torres","Rocio",42522794,'F');
-		Entrega entrega1= new Entrega(14,LocalDate.now(),false);
+		//Variables necesarias para instanciar carrito
+		Ubicacion capital = new Ubicacion(100, 50);
+		Contacto zonaSur = new Contacto("yourname@example.com", "1173654837", capital);
+		Cliente clienteNacho = new Cliente(1111, zonaSur, "Salinas", "Nicolas", 42284321, 'M');
+		Cliente clienteRocio = new Cliente(1234, zonaSur, "Torres", "Rocio", 11222333, 'F');
+		Entrega domicilio = new Entrega(1111, LocalDate.now(), false);
+		Entrega correoArg = new Entrega(1234, LocalDate.of(2020, 10, 21), true);
 		
-		Carrito Changuito = new Carrito (14,LocalDate.now(),LocalTime.now(),true,50,Persona,listaSuper,entrega1);
+		//Instanciamos dos carritos con distintos parametros
+		Carrito comprasNacho = new Carrito(0001, LocalDate.of(2020, 11, 23), LocalTime.of(10, 00), true, 0, clienteNacho, lista1, domicilio);
+		Carrito comprasRocio = new Carrito(1234, LocalDate.now(), LocalTime.now(), true, 0, clienteRocio, lista2, correoArg);
 		
-		System.out.println("Total Carrito: " +Changuito.calcularTotalCarrito());
-		System.out.println("Total a pagar Carrito: " +Changuito.totalAPagarCarrito());		
-		System.out.println("Descuento por dia:" +Changuito.calcularDescuentoDia(5,50));
-		Changuito.calcularDescuentoCarrito(5, 20, 50);
 		
 	}
 }
