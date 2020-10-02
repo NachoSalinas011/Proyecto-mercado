@@ -81,54 +81,67 @@ public class Carrito {
 				+ "]";
 	}
 	public ItemCarrito traerItemCarrito(int idItem) { //Decidimos implementar esta funcion en caso de ser necesaria
-		ItemCarrito result = null;
-		for(ItemCarrito e : lstItemCarrito)
+		ItemCarrito itemEncontrado = null;
+		ItemCarrito itemBuscado = null;
+		int index = 0;
+		while(itemEncontrado == null && index < lstItemCarrito.size())
 		{
-			if(idItem == e.getArticulo().getId())
+			itemBuscado = lstItemCarrito.get(index);
+			if(itemBuscado.getArticulo().getId() == idItem)
 			{
-				result = e;
+				itemEncontrado = itemBuscado;
 			}
+			index++;
 		}
-		return result;
+		return itemEncontrado;
+	}
+	public ItemCarrito traerItemCarrito(Articulo articulo) { //Sobrecarga del método traerItemCarrito
+		ItemCarrito itemEncontrado = null;
+		ItemCarrito itemBuscado = null;
+		int index = 0;
+		while(itemEncontrado == null && index < lstItemCarrito.size()) //Mientras el resultado sea null y el iterador sea menor al tamaño de la lista
+		{
+			itemBuscado = lstItemCarrito.get(index); //Obtengo un elemento de la lista
+			if(itemBuscado.getArticulo().equals(articulo))//Los comparo
+			{
+				itemEncontrado = itemBuscado;
+			}
+			index++;
+		}
+		return itemEncontrado;//Devuelvo un resultado
 	}
 	public boolean agregarItem(Articulo articulo, int cantidad) {
 		boolean result = false;
-		ItemCarrito item = new ItemCarrito(articulo, cantidad);//Instancio un objeto ItemCarrito con los valores del parametro
-		for(ItemCarrito e: lstItemCarrito) //Para cada item de la lista
+		ItemCarrito itemBuscado = new ItemCarrito(articulo, cantidad);
+		ItemCarrito itemEncontrado = traerItemCarrito(itemBuscado.getArticulo()); //Traigo el item que quiero agregar
+		if(lstItemCarrito.contains(itemEncontrado)) //Si el item existe en la lista
 		{
-			if(e.getArticulo().getId() == item.getArticulo().getId()) //Si el id del articulo que quiero EXISTE en la lista
-			{
-				e.setCantidad(e.getCantidad() + item.getCantidad()); //Aumento su cantidad
-				result = true; //Avisaré que la operación se realizó con exito
-			}
-		}
-		if(lstItemCarrito.contains(item) == false) //Si el articulo NO EXISTE en la lista
+			itemEncontrado.setCantidad(itemEncontrado.getCantidad() + cantidad);//Cambio su cantidad
+			result = true;
+		}else
 		{
-			lstItemCarrito.add(item); //Lo agrego a la lista
+			lstItemCarrito.add(itemBuscado);//Sino, lo agrego
 			result = true;
 		}
-		return result; //Devuelvo el resultado de la operaciòn
+		return result;//Devuelve true si la operación se realizò con exito
 	}
 	public boolean eliminarItem(Articulo articulo, int cantidad) { //Eliminar un articulo de la lista
 		boolean result = false;
 		int cant = 0;
-		ItemCarrito item = new ItemCarrito(articulo, cantidad); //Instancio un objeto ItemCarrito con los valores por parametro
-		for(ItemCarrito e : lstItemCarrito) //Para cada item de la lista
+		ItemCarrito itemBuscado = new ItemCarrito(articulo, cantidad);
+		ItemCarrito itemEncontrado = traerItemCarrito(itemBuscado.getArticulo());
+		if(lstItemCarrito.contains(itemEncontrado))
 		{
-			if(e.getArticulo().getId() == item.getArticulo().getId()) //Si el id del articulo se corresponde con el de la lista
-			{
-				cant = e.getCantidad() - item.getCantidad();//Calculo la cantidad
-				item = e; //Guardo el objeto en una variable auxiliar
-			}
+			cant = itemEncontrado.getCantidad();
 		}
-		if(cant <= 0)//Si la cantidad es menor o igual a 0
+		if(cant > cantidad)
 		{
-			lstItemCarrito.remove(item);//Elimino el articulo de la lista
+			itemEncontrado.setCantidad(itemEncontrado.getCantidad() - cantidad);
 			result = true;
 		}
-		if(cant > 0)
+		else
 		{
-			item.setCantidad(cant); //Sino, actualizo su cantidad 
+			lstItemCarrito.remove(itemEncontrado);
 			result = true;
 		}
 		return result;
