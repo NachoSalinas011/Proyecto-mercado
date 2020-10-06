@@ -1,6 +1,8 @@
 package modelo;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.ArrayList;
 public class Turno {
 	private LocalDate dia;
 	private LocalTime hora;
@@ -32,5 +34,10 @@ public class Turno {
 	@Override
 	public String toString() {
 		return "Turno [dia=" + dia + ", hora=" + hora + ", ocupado=" + ocupado + "]";
+	}
+	public List<Turno> generarTurnosLibres(LocalDate fecha){
+		List<Turno> lstTurno = new ArrayList<Turno>();
+		//TODO
+		return lstTurno;
 	}
 }
