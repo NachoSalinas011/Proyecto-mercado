@@ -1,4 +1,7 @@
 package modelo;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * @author usuario1
@@ -153,7 +156,81 @@ public class Comercio extends Actor {
 		}
 		return result;
 	}
+	public DiaRetiro traerDiaRetiro(int dia) {//Trae un diaRetiro por fecha
+		int index = 0;
+		DiaRetiro obtenido = null;
+		while(index < lstDiaRetiro.size() && obtenido == null)
+		{
+			if(lstDiaRetiro.get(index).getDiaSemana() == dia)
+			{
+				obtenido = lstDiaRetiro.get(index);
+			}
+			index++;
+		}
+		return obtenido;
+	}
+	public Carrito traerCarrito(LocalDate fecha) {//Trae un carrito por fecha
+		int index = 0;
+		Carrito obtenido = null;
+		while(index < lstCarrito.size() && obtenido == null)
+		{
+			if(lstCarrito.get(index).getFecha().equals(fecha))
+			{
+				obtenido = lstCarrito.get(index);
+			}
+			index++;
+		}
+		return obtenido;
+	}
+	public List<Turno> generarTurnosLibres(LocalDate fecha){
+		List<Turno> lstTurno = new ArrayList<Turno>(); //Lista de turnos a retornar
+		int dia = fecha.getDayOfWeek().getValue(); //Paso la fecha a int
+		DiaRetiro diaRetiro = traerDiaRetiro(dia);//Uso traerDiaReiro
+		LocalTime hora = diaRetiro.getHoraDesde();//Creo variables fecha y hora
+		if(lstDiaRetiro.contains(diaRetiro)) //Si existe DiaRetiro en la lista
+		{
+			while(hora.equals(diaRetiro.getHoraDesde()) || hora.equals(diaRetiro.getHoraHasta()) || hora.isAfter(diaRetiro.getHoraDesde()) && hora.isBefore(diaRetiro.getHoraHasta()))//Si la hora esta en el rango establecido
+			{
+				Turno turno = new Turno(fecha, hora, false);//Asigno a turnos sus correspondientes valores
+				lstTurno.add(turno);//Si no hago esto no funciona xd
+				hora = hora.plusMinutes(diaRetiro.getIntervalo());//Sumo el intervalo
+			}
+		}
+		return lstTurno;//Retorno la lista
+	}
+	public List<Turno> traerTurnosOcupados(LocalDate fecha){ //Falta desarrollar, devuelve solo un turno ocupado
+		List<Turno> lstTurno = new ArrayList<Turno>();
+		List<Turno> lstTurnosOcupados = new ArrayList<Turno>();
+		lstTurno = generarTurnosLibres(fecha); //Tengo los turnos libres de la fecha indicada
+		int index = 0;
+		while(index < lstTurno.size())
+		{
+			int cont = 0;
+			while(cont < lstCarrito.size())
+			{
+				LocalTime horaRetiro = traerHoraRetiro(lstCarrito.get(cont).getFecha());
+				if(lstTurno.get(index).getHora().equals(horaRetiro))
+				{
+					System.out.println("Entre al if");
+					lstTurno.get(index).setOcupado(true);
+					lstTurnosOcupados.add(lstTurno.get(index));
+				}
+				cont++;
+			}
+			index++;
+		}
+		return lstTurnosOcupados;
+	}
+	public LocalTime traerHoraRetiro(LocalDate fecha) { //Trae la hora del retiro de un carrito en determinada fecha
+		int index = 0;
+		RetiroLocal retiro = new RetiroLocal(1, LocalDate.now(), false, LocalTime.now());
+		LocalTime horaEntrega = LocalTime.now();
+		Carrito carrito = traerCarrito(fecha);
+		if(carrito.getFecha().equals(fecha) && carrito.getEntrega() instanceof RetiroLocal)
+			{
+				retiro = (RetiroLocal)lstCarrito.get(index).getEntrega();
+				horaEntrega = retiro.getHoraEntrega();
+		}
+		return horaEntrega;
+	}
 }
-
-
-
