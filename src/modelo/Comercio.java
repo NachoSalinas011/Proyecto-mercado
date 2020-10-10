@@ -233,4 +233,26 @@ public class Comercio extends Actor {
 		}
 		return horaEntrega;
 	}
+	
+	public boolean agregarDiaRetiro(int diaSemana, LocalTime horaDesde, LocalTime horaHasta, int intervalo) 
+	{
+		boolean resultado= false;
+		int diaOcupado=0;
+		int contador=0;
+		while (contador<lstDiaRetiro.size())
+		{
+		     if (lstDiaRetiro.get(contador).getHoraDesde() ==  horaDesde)
+		     {
+		    	 diaOcupado++;
+		     }
+		     contador++;
+		}
+		if (diaOcupado == 0)
+		{
+		  DiaRetiro retiro= new DiaRetiro (0, diaSemana, horaDesde, horaHasta, intervalo);
+		  lstDiaRetiro.add(retiro);
+		  resultado= true;
+		}
+		return resultado;
+	}
 }

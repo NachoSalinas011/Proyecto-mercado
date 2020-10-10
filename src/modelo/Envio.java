@@ -53,4 +53,17 @@ public class Envio extends Entrega{
 		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1- va1));
 		return radioTierra * va2;
 	}
+	
+	public double setCosto (Ubicacion ubicacion, double costoFijo, double costoPorKm)
+	{
+		Ubicacion ubicacion1= getUbicacion();
+		double lat2=ubicacion1.getLatitud();
+		double lng2=ubicacion1.getLongitud();		
+		double lat1=ubicacion.getLatitud();
+		double lng1=ubicacion.getLongitud();
+		double distancia= distanciaCoord(lat1,lng1,lat2,lng2);
+		double costoTotal= costoFijo+(distancia * costoPorKm);
+		return costoTotal;
+		
+	}
 }

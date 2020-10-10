@@ -100,9 +100,13 @@ public class test {
 			index++;//Aumento el indice
 		}
 		System.out.println(listaTurnos.toString());
-		*/
+		
 		List<Turno> turnos = new ArrayList<Turno>();
 		turnos = chino.traerTurnosOcupados(LocalDate.of(2020, 11, 23));
 		System.out.println(turnos.toString());
+		*/
+		System.out.println("Agregar Dia de Retiro: " + chino.agregarDiaRetiro(3, LocalTime.of(10, 30), LocalTime.of(11, 00), 10));
+		System.out.println("Agregar Dia de Retiro2: " + chino.agregarDiaRetiro(3, LocalTime.of(9, 00), LocalTime.of(13, 30), 10));
+	
 	}
 }
