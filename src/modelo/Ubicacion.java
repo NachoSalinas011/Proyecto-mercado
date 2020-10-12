@@ -24,4 +24,5 @@ public class Ubicacion {
 	public String toString() {
 		return "Ubicacion [latitud=" + latitud + ", longitud=" + longitud + "]";
 	}
+	
 }

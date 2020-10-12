@@ -51,20 +51,30 @@ public class test {
 		//Variables necesarias para instanciar carrito
 		Ubicacion capital = new Ubicacion(100, 50);
 		Contacto zonaSur = new Contacto("yourname@example.com", "1173654837", capital);
+		Contacto vendedorZonaN = new Contacto("vendedor.ZCapital@outlook.es", "1121753214", capital);
+		
 		Cliente clienteNacho = new Cliente(1111, zonaSur, "Salinas", "Nicolas", 42284321, 'M');
 		Cliente clienteRocio = new Cliente(1234, zonaSur, "Torres", "Rocio", 42522794, 'F');
+		Cliente clienteMatias = new Cliente(1112, vendedorZonaN, "Florencio", "Matias", 42353138, 'M');
+		Cliente clienteFlorencio = new Cliente (1122, vendedorZonaN, "Florencio", "Maria", 50234578 ,'F');
+		
 		RetiroLocal local = new RetiroLocal(1234, LocalDate.of(2020, 11, 23), true, LocalTime.of(9, 30));
 		RetiroLocal correoArg = new RetiroLocal(5678, LocalDate.of(2020, 11, 23), false, LocalTime.of(13, 30));
+		
 		Envio envio = new Envio(1, LocalDate.of(2020, 11, 23), true, LocalTime.of(20, 20), LocalTime.of(10, 0), 0, capital);
+		
 		//Instanciamos dos carritos con distintos parametros
 		Carrito comprasNacho = new Carrito(1111, LocalDate.of(2020, 11, 23), LocalTime.of(10, 00), true, 0, clienteNacho, lista1,local);
 		Carrito comprasRocio = new Carrito(1234, LocalDate.of(2020, 11, 23), LocalTime.of(9, 30), true, 0, clienteRocio, lista2, envio);
 		Carrito comprasNacho2 = new Carrito(5678, LocalDate.now(), LocalTime.now(), true, 0, clienteRocio, lista1, correoArg);
+		
 		List<Carrito> carritos = new ArrayList<Carrito>();
 		carritos.add(comprasNacho);
 		carritos.add(comprasRocio);
 		carritos.add(comprasNacho2);
+		
 		List<DiaRetiro> listaRetiros = new ArrayList<DiaRetiro>();
+		
 		List<Turno> listaTurnos = new ArrayList<Turno>();
 		
 		DiaRetiro retiro1 = new DiaRetiro(1, 1, LocalTime.of(9, 00), LocalTime.of(13, 30), 10);
@@ -113,5 +123,43 @@ public class test {
 		//turnosOcupados = chino.traerTurnosOcupados(LocalDate.of(2020, 11, 23));
 		System.out.println(turnosOcupados.toString());
 		
+		
+		
+		
+		// Nuevos Articulos
+		Articulo art5 = new Articulo(2468,"Huevos 12U","2468101214161",120); 
+		Articulo art6 = new Articulo(8102, "Pan 1KG", "1312111098765", 110);
+		
+		articulos.add(art5);
+		articulos.add(art6);
+
+		//Items de Carrito
+
+		ItemCarrito producto5 = new ItemCarrito(art5,2);
+		ItemCarrito producto6 = new ItemCarrito(art6,1);
+
+		//Listas de articulos
+
+		List<ItemCarrito> lista3 = new ArrayList<ItemCarrito>();
+		lista3.add(producto5);
+		lista3.add(producto6);
+		
+		List<ItemCarrito> lista4 = new ArrayList<ItemCarrito>();
+		lista4.add(producto6);
+		lista4.add(producto5);
+
+		//Variables necesarias para instanciar carrito
+
+		RetiroLocal correoAndreani = new RetiroLocal(1122, LocalDate.of(2020, 11,23),true,LocalTime.of(12,10));
+		RetiroLocal correoOCA = new RetiroLocal(1237,LocalDate.of(2020, 11, 23),true,LocalTime.of(12,00));
+
+		//Instanciamos dos carritos con distintos parametros
+
+		Carrito comprasMatias = new Carrito(2468,LocalDate.of(2020, 11, 23),LocalTime.of(13,00),true,0,clienteMatias,lista3,correoAndreani);
+		Carrito comprasFlorencio = new Carrito(4685,LocalDate.of(2020, 11, 23),LocalTime.of(12,50),true,0,clienteFlorencio,lista4,correoOCA);
+
+
+		carritos.add(comprasMatias);
+		carritos.add(comprasFlorencio);
 	}
 }

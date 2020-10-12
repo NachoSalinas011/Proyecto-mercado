@@ -217,4 +217,11 @@ public class Carrito {
 		}
 		setDescuento(total);//Actualizo el descuento
 	}
+	
+	public Ubicacion traerUbicacion()
+	{
+		Ubicacion ubicacion1= null;
+		ubicacion1= this.getCliente().getContacto().getUbicacion();
+		return ubicacion1;
+	}
 }
