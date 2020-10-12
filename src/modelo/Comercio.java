@@ -198,6 +198,28 @@ public class Comercio extends Actor {
 		}
 		return lstTurno;//Retorno la lista
 	}
+	public List<Turno>	generarAgenda(LocalDate fecha){
+		List<Turno> agenda = new ArrayList<Turno>();
+		agenda = generarTurnosLibres(fecha);
+		int indexAgenda = 0, indexCarrito = 0;
+		while(indexCarrito < lstCarrito.size())
+		{
+			RetiroLocal entrega = (RetiroLocal)lstCarrito.get(indexCarrito).getEntrega();
+			System.out.println("Entrega: "+entrega);
+			indexAgenda = 0;
+			while(indexAgenda < agenda.size())
+			{
+				if(agenda.get(indexAgenda).getHora().equals(entrega.getHoraEntrega()))
+				{
+					System.out.println("entre al if agenda");
+					agenda.get(indexAgenda).setOcupado(true);
+				}
+				indexAgenda++;
+			}
+			indexCarrito++;
+		}
+		return agenda;
+	}
 	public List<Turno> traerTurnosOcupados(LocalDate fecha){ //Falta desarrollar, devuelve solo un turno ocupado
 		List<Turno> lstTurno = new ArrayList<Turno>();
 		List<Turno> lstTurnosOcupados = new ArrayList<Turno>();

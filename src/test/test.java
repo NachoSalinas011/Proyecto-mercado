@@ -53,8 +53,8 @@ public class test {
 		Contacto zonaSur = new Contacto("yourname@example.com", "1173654837", capital);
 		Cliente clienteNacho = new Cliente(1111, zonaSur, "Salinas", "Nicolas", 42284321, 'M');
 		Cliente clienteRocio = new Cliente(1234, zonaSur, "Torres", "Rocio", 42522794, 'F');
-		RetiroLocal local = new RetiroLocal(1234, LocalDate.now(), true, LocalTime.of(9, 10));
-		RetiroLocal correoArg = new RetiroLocal(5678, LocalDate.now(), false, LocalTime.of(10, 30));
+		RetiroLocal local = new RetiroLocal(1234, LocalDate.of(2020, 11, 23), true, LocalTime.of(9, 10));
+		RetiroLocal correoArg = new RetiroLocal(5678, LocalDate.of(2020, 11, 23), false, LocalTime.of(10, 30));
 		
 		//Instanciamos dos carritos con distintos parametros
 		Carrito comprasNacho = new Carrito(1111, LocalDate.of(2020, 11, 23), LocalTime.of(10, 00), true, 0, clienteNacho, lista1,local);
@@ -105,8 +105,8 @@ public class test {
 		turnos = chino.traerTurnosOcupados(LocalDate.of(2020, 11, 23));
 		System.out.println(turnos.toString());
 		*/
-		System.out.println("Agregar Dia de Retiro: " + chino.agregarDiaRetiro(3, LocalTime.of(10, 30), LocalTime.of(11, 00), 10));
-		System.out.println("Agregar Dia de Retiro2: " + chino.agregarDiaRetiro(3, LocalTime.of(9, 00), LocalTime.of(13, 30), 10));
-	
+		List<Turno> agenda = new ArrayList<Turno>();
+		agenda = chino.generarAgenda(LocalDate.of(2020, 11, 23));
+		System.out.println(agenda.toString());
 	}
 }
