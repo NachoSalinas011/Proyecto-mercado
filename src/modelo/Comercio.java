@@ -205,13 +205,11 @@ public class Comercio extends Actor {
 		while(indexCarrito < lstCarrito.size())
 		{
 			RetiroLocal entrega = (RetiroLocal)lstCarrito.get(indexCarrito).getEntrega();
-			System.out.println("Entrega: "+entrega);
 			indexAgenda = 0;
 			while(indexAgenda < agenda.size())
 			{
-				if(agenda.get(indexAgenda).getHora().equals(entrega.getHoraEntrega()))
+				if(agenda.get(indexAgenda).getDia().equals(entrega.getFecha()) && agenda.get(indexAgenda).getHora().equals(entrega.getHoraEntrega()))
 				{
-					System.out.println("entre al if agenda");
 					agenda.get(indexAgenda).setOcupado(true);
 				}
 				indexAgenda++;
@@ -223,21 +221,13 @@ public class Comercio extends Actor {
 	public List<Turno> traerTurnosOcupados(LocalDate fecha){ //Falta desarrollar, devuelve solo un turno ocupado
 		List<Turno> lstTurno = new ArrayList<Turno>();
 		List<Turno> lstTurnosOcupados = new ArrayList<Turno>();
-		lstTurno = generarTurnosLibres(fecha); //Tengo los turnos libres de la fecha indicada
+		lstTurno = generarAgenda(fecha); //Tengo los turnos libres de la fecha indicada
 		int index = 0;
 		while(index < lstTurno.size())
 		{
-			int cont = 0;
-			while(cont < lstCarrito.size())
+			if(lstTurno.get(index).isOcupado() == true)
 			{
-				LocalTime horaRetiro = traerHoraRetiro(lstCarrito.get(cont).getFecha());
-				if(lstTurno.get(index).getHora().equals(horaRetiro))
-				{
-					System.out.println("Entre al if");
-					lstTurno.get(index).setOcupado(true);
-					lstTurnosOcupados.add(lstTurno.get(index));
-				}
-				cont++;
+				lstTurnosOcupados.add(lstTurno.get(index));
 			}
 			index++;
 		}
