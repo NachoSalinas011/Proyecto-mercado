@@ -54,16 +54,16 @@ public class test {
 		Cliente clienteNacho = new Cliente(1111, zonaSur, "Salinas", "Nicolas", 42284321, 'M');
 		Cliente clienteRocio = new Cliente(1234, zonaSur, "Torres", "Rocio", 42522794, 'F');
 		RetiroLocal local = new RetiroLocal(1234, LocalDate.of(2020, 11, 23), true, LocalTime.of(9, 30));
-		RetiroLocal correoArg = new RetiroLocal(5678, LocalDate.of(2020, 11, 26), false, LocalTime.of(16, 00));
-		
+		RetiroLocal correoArg = new RetiroLocal(5678, LocalDate.of(2020, 11, 23), false, LocalTime.of(13, 30));
+		Envio envio = new Envio(1, LocalDate.of(2020, 11, 23), true, LocalTime.of(20, 20), LocalTime.of(10, 0), 0, capital);
 		//Instanciamos dos carritos con distintos parametros
 		Carrito comprasNacho = new Carrito(1111, LocalDate.of(2020, 11, 23), LocalTime.of(10, 00), true, 0, clienteNacho, lista1,local);
-		Carrito comprasRocio = new Carrito(1234, LocalDate.of(2020, 11, 26), LocalTime.now(), true, 0, clienteRocio, lista2, correoArg);
-		
+		Carrito comprasRocio = new Carrito(1234, LocalDate.of(2020, 11, 23), LocalTime.of(9, 30), true, 0, clienteRocio, lista2, envio);
+		Carrito comprasNacho2 = new Carrito(5678, LocalDate.now(), LocalTime.now(), true, 0, clienteRocio, lista1, correoArg);
 		List<Carrito> carritos = new ArrayList<Carrito>();
 		carritos.add(comprasNacho);
 		carritos.add(comprasRocio);
-		
+		carritos.add(comprasNacho2);
 		List<DiaRetiro> listaRetiros = new ArrayList<DiaRetiro>();
 		List<Turno> listaTurnos = new ArrayList<Turno>();
 		
@@ -109,7 +109,9 @@ public class test {
 		//agenda = chino.generarAgenda(LocalDate.of(2020, 11, 23));
 		//System.out.println(agenda.toString());
 		List<Turno> turnosOcupados = new ArrayList<Turno>();
-		turnosOcupados = chino.traerTurnosOcupados(LocalDate.of(2020, 11, 23));
+		turnosOcupados = chino.generarAgenda(LocalDate.of(2020, 11, 23));
+		//turnosOcupados = chino.traerTurnosOcupados(LocalDate.of(2020, 11, 23));
 		System.out.println(turnosOcupados.toString());
+		
 	}
 }

@@ -93,6 +93,7 @@ public class Comercio extends Actor {
 	public void setLstCarrito(List<Carrito> lstCarrito) {
 		this.lstCarrito = lstCarrito;
 	}
+	
 	@Override
 	public String toString() {
 		return "Comercio [nombreComercio=" + nombreComercio + ", cuit=" + cuit + ", CostoFijo=" + CostoFijo
@@ -204,7 +205,11 @@ public class Comercio extends Actor {
 		int indexAgenda = 0, indexCarrito = 0;
 		while(indexCarrito < lstCarrito.size())
 		{
-			RetiroLocal entrega = (RetiroLocal)lstCarrito.get(indexCarrito).getEntrega();
+			RetiroLocal entrega = new RetiroLocal(0, LocalDate.of(1999, 01, 01), false, LocalTime.of(00, 00));
+			if(lstCarrito.get(indexCarrito).getEntrega() instanceof RetiroLocal)
+			{
+				entrega = (RetiroLocal)lstCarrito.get(indexCarrito).getEntrega();
+			}
 			indexAgenda = 0;
 			while(indexAgenda < agenda.size())
 			{
@@ -266,5 +271,26 @@ public class Comercio extends Actor {
 		  resultado= true;
 		}
 		return resultado;
+	}
+	public void mostrarComercio()
+	{
+		System.out.print("Comercio: "+getNombreComercio()+"\t|Identificación: "+getId()+"\t|Cuit: "+getCuit()+"\n");
+		System.out.print("\nArticulos a la venta: ");
+		for(Articulo art : getLstArticulo())
+		{
+			System.out.print("\n"+art.toString());
+		}
+	}
+	public void mostrarCarritosCalculados() {
+		int cont= 1;
+		for(Carrito e : getLstCarrito())
+		{
+			e.calcularDescuentoCarrito(2, getPorcentajeDescuentoDia(), getPorcentajeDescuentoEfectivo());
+			System.out.println("\n\nSubtotal Carrito "+cont+": "+e.calcularTotalCarrito());
+			System.out.println("Pago en efectivo: "+e.getEntrega().isEfectivo());
+			System.out.println("Descuento por pago en efectivo: "+e.getDescuento());
+			System.out.println("Total a pagar: "+e.calcularTotalCarrito());
+			cont++;
+		}
 	}
 }
