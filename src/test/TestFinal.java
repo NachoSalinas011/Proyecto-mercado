@@ -1,6 +1,7 @@
 package test;
 
 import java.util.List;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -10,11 +11,12 @@ import modelo.Cliente;
 import modelo.Comercio;
 import modelo.Contacto;
 import modelo.DiaRetiro;
+import modelo.Envio;
 import modelo.ItemCarrito;
 import modelo.RetiroLocal;
 import modelo.Ubicacion;
 import modelo.Turno;
-public class AlternTest {
+public class TestFinal {
 
 	public static void main(String[] args) {
 		//Articulos en gondola
@@ -108,6 +110,7 @@ public class AlternTest {
 		RetiroLocal retiroMatias = new RetiroLocal(4, LocalDate.of(2020, 10, 13), false, LocalTime.of(11, 40));
 		RetiroLocal retiroMarlene = new RetiroLocal(5, LocalDate.of(2020, 10, 13), true, LocalTime.of(12, 20));
 		RetiroLocal retiroNaty = new RetiroLocal(6, LocalDate.of(2020, 10, 13), false, LocalTime.of(15, 00));
+		Envio envioADomicilio = new Envio(7, LocalDate.of(2020, 10, 13), true, LocalTime.of(9, 00), LocalTime.of(12, 00), 150, zonaSur);
 
 		//Carritos de los clientes
 		Carrito carritoNacho = new Carrito(0001, LocalDate.now(), LocalTime.now(), false, 0, clienteNacho, comprasCarrito1, retiroNacho);
@@ -116,6 +119,7 @@ public class AlternTest {
 		Carrito carritoMatias = new Carrito(0100, LocalDate.now(), LocalTime.now(), true, 0, clienteMatias, comprasCarrito4, retiroMatias);
 		Carrito carritoMarlene = new Carrito(0101, LocalDate.now(), LocalTime.now(), false, 0, clienteMarlene, comprasCarrito5, retiroMarlene);
 		Carrito carritoNaty = new Carrito(0110, LocalDate.now(), LocalTime.now(), true, 0, clienteNaty, comprasCarrito6, retiroNaty);
+		Carrito carritoElias = new Carrito(0111, LocalDate.of(2020, 10, 23), LocalTime.now(), true, 0, clienteRocio, comprasCarrito2, envioADomicilio);
 
 		//Lista de carritos que tendra el comercio
 		List<Carrito>	lstCarritos = new ArrayList<Carrito>();
@@ -126,52 +130,87 @@ public class AlternTest {
 		lstCarritos.add(carritoMarlene);
 		lstCarritos.add(carritoNaty);
 
-		//Instanciamos comercio
+		//Instanciamos comercio y probamos los métodos
+		
 		Comercio supermercado = new Comercio(10, dueñoComercio, "Supermercado Objetos", 20422843214l, 50d, 30d, 5, 50, 15, diasRetiro, articulosComercio, lstCarritos);
-		/*//supermercado.mostrarComercio();
+		supermercado.mostrarComercio();
+		System.out.println("\n---------------------------------------------------");
+		System.out.println("\n\nHora Retiro de "+LocalDate.of(2020, 10, 13)+": "+supermercado.traerHoraRetiro(LocalDate.of(2020, 10, 13))+"\n\n");
+		List<Turno> turnos = new ArrayList<Turno>();
+		turnos = supermercado.generarAgenda(LocalDate.of(2020, 10, 13));
+		System.out.println("---------------------------------------------------");
+		System.out.println("Turnos para dia "+LocalDate.of(2020, 10, 13)+"\n");
+		for(Turno turno : turnos)
+		{
+			System.out.println(turno.toString());
+		}
+		turnos = supermercado.traerTurnosOcupados(LocalDate.of(2020, 10, 13));
+		System.out.println("---------------------------------------------------");
+		System.out.println("Turnos ocupados para dia "+LocalDate.of(2020, 10, 13)+"\n");
+		for(Turno turno : turnos)
+		{
+			System.out.println(turno.toString());
+		}
+		System.out.println("---------------------------------------------------");
 		List<Turno> agenda = new ArrayList<Turno>();
-		agenda = supermercado.traerTurnosOcupados(LocalDate.of(2020, 10, 13));
-		System.out.println("Lista de turnos ocupados: ");
-		for(Turno e : agenda)
+		agenda = supermercado.generarAgenda(LocalDate.of(2020, 10, 13));
+		System.out.println("Agenda generada para dia "+LocalDate.of(2020, 10, 13));
+		for(Turno turno : agenda)
+		{
+			System.out.println(turno.toString());
+		}
+		System.out.println("---------------------------------------------------");
+		System.out.println("Agregamos un dia retiro en la lista, será día 8 por la tarde\n\nTodos los dias retiro:\n");
+		supermercado.agregarDiaRetiro(8, LocalTime.of(17, 00), LocalTime.of(22, 00), 25);
+		for(DiaRetiro dia : supermercado.getLstDiaRetiro())
+		{
+			System.out.println(dia.toString());
+		}
+		System.out.println("---------------------------------------------------");
+		System.out.println("Validemos los cod de barras de los articulos\n");
+		System.out.println("Es válido el cod de barras de art1?: "+art1.validarCodBarras());
+		System.out.println("Es válido el cod de barras de art2?: "+art2.validarCodBarras());
+		System.out.println("Es válido el cod de barras de art3?: "+art3.validarCodBarras());
+		System.out.println("Es válido el cod de barras de art4?: "+art4.validarCodBarras());
+		System.out.println("Es válido el cod de barras de art5?: "+art5.validarCodBarras());
+		System.out.println("Es válido el cod de barras de art6?: "+art6.validarCodBarras());
+		System.out.println("---------------------------------------------------");
+		for(ItemCarrito e : carritoNacho.getLstItemCarrito())
 		{
 			System.out.println(e.toString());
-		}*/
-		
-		System.out.println("Es valido el cuit del comercio?: "+supermercado.validarIdentidicadorUnico(supermercado.getCuit()));
-		System.out.println("Es valido el codigo de barras del articulo 1?: "+art1.validarCodBarras()+"\n\n");
-		//Muestro la lista inicial
-		/*for(ItemCarrito item : carritoNacho.getLstItemCarrito())
-		{
-			System.out.println(item.toString());
 		}
-		//La modifico
-		System.out.println("\n\n");
+		System.out.println("\nAgrego 1 item al primer elemento de la lista de compras y agrego un producto nuevo:\n");
 		carritoNacho.agregarItem(art1, 1);
-		carritoNacho.agregarItem(art6, 3);
-		//La muestro modificada
-				for(ItemCarrito item : carritoNacho.getLstItemCarrito())
-				{
-					System.out.println(item.toString());
-				}
-		carritoNacho.eliminarItem(art6, 3);
-		carritoNacho.eliminarItem(art1, 1);
-		
-		//La muestro otra vez, quedando como el principio
-		System.out.println("\n\n");
-		for(ItemCarrito item : carritoNacho.getLstItemCarrito())
+		carritoNacho.agregarItem(art6, 2);
+		for(ItemCarrito e : carritoNacho.getLstItemCarrito())
 		{
-			System.out.println(item.toString());
+			System.out.println(e.toString());
 		}
-		+/
+		System.out.println("\nAhora elimino el item que agregué al primer elemento y borro por completo el producto nuevo\n");
+		carritoNacho.eliminarItem(art1, 1);
+		carritoNacho.eliminarItem(art6, 10);
+		for(ItemCarrito e : carritoNacho.getLstItemCarrito())
+		{
+			System.out.println(e.toString());
+		}
+		System.out.println("---------------------------------------------------");
+		System.out.println("Calculemos los totales y descuentos del carrito 1\n");
+		System.out.println("Subtotal item calculado del producto 1. Precio: "+producto1.getArticulo().getPrecio()+" Cantidad: "+producto1.getCantidad()+" Subtotal: "+producto1.calcularSubTotalItem());
+		System.out.println("\nSubtotal carrito 1: "+carritoNacho.calcularTotalCarrito());
+		System.out.println("\nLos viernes hay promoción al 50% de la segunda unidad! El carrito 1 obtiene un descuento de: "+carritoNacho.calcularDescuentoDia(5, 50));
+		System.out.println("Pero como hoy es martes, solo hay descuento del 20% del total si se paga en efectivo. El carrito 1 obtiene un descuento de: "+carritoNacho.calcularDescuentoEfectivo(20));
+		System.out.println("Los descuentos no son acumulables, solo se aplica el mayor");
+		carritoNacho.calcularDescuentoCarrito(2, 50, 20);
+		System.out.println("\nCarrito 1. Subtotal: "+carritoNacho.calcularTotalCarrito()+" Descuento: "+carritoNacho.getDescuento());
+		System.out.println("Total a pagar carrito 1: "+carritoNacho.totalAPagarCarrito());
+		System.out.println("---------------------------------------------------");
+		System.out.println("Mostremos el costo del carrito 7 que eligió el modo envio a domicilio");
+		Envio envioElias = (Envio)carritoElias.getEntrega();
+		System.out.println("Ubicacion: "+envioElias.getUbicacion());
+		System.out.println("Costo envio base: "+envioElias.getCosto());
+		envioElias.setCosto(capital, 150, 2);
+		DecimalFormat df = new DecimalFormat("#.00");
+		System.out.println("Costo calculado: "+df.format(envioElias.getCosto()));
 		
-		/*List<Turno>	turnos = new ArrayList<Turno>();
-		turnos = supermercado.generarTurnosLibres(LocalDate.of(2020, 10, 13));
-		System.out.println(turnos.toString()+"\n\n");
-		turnos = supermercado.traerTurnosOcupados(LocalDate.of(2020, 10, 13));
-		System.out.println(turnos.toString());
-		*/
-		
-		//Hola
 	}
-
 }

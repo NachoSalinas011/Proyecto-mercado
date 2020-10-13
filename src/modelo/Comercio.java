@@ -23,7 +23,10 @@ public class Comercio extends Actor {
 			List<Articulo> lstArticulo, List<Carrito> lstCarrito) {
 		super(id, contacto);
 		this.nombreComercio = nombreComercio;
-		this.cuit = cuit;
+		if(validarIdentidicadorUnico(cuit) == true)//De esta forma solo se cargaran cuit validados. En caso de no ser valido devolvera error debido a que no implementamos excepciones
+		{
+			this.cuit = cuit;
+		}
 		CostoFijo = costoFijo;
 		this.costoPorKm = costoPorKm;
 		this.diaDescuento = diaDescuento;
@@ -102,7 +105,7 @@ public class Comercio extends Actor {
 				+ ", lstDiaRetiro=" + lstDiaRetiro + ", lstArticulo=" + lstArticulo + ", lstCarrito=" + lstCarrito
 				+ "]";
 	}
-	public boolean validarIdentidicadorUnico(long cuit) {
+	protected boolean validarIdentidicadorUnico(long cuit) {
 		boolean result = false; 
 		int suma=0, z=0, r=0, cont = 5; //Variables a usar
 		String cadenaCuit = String.valueOf(cuit); //Paso a String
@@ -254,21 +257,12 @@ public class Comercio extends Actor {
 	public boolean agregarDiaRetiro(int diaSemana, LocalTime horaDesde, LocalTime horaHasta, int intervalo) 
 	{
 		boolean resultado= false;
-		int diaOcupado=0;
-		int contador=0;
-		while (contador<lstDiaRetiro.size())
+		DiaRetiro retiro= traerDiaRetiro(diaSemana);
+		DiaRetiro diaPorParametro = new DiaRetiro(lstDiaRetiro.get(lstDiaRetiro.size()-1).getId() +1, diaSemana, horaDesde, horaHasta, intervalo);
+		if(lstDiaRetiro.contains(retiro) == false)
 		{
-		     if (lstDiaRetiro.get(contador).getHoraDesde() ==  horaDesde)
-		     {
-		    	 diaOcupado++;
-		     }
-		     contador++;
-		}
-		if (diaOcupado == 0)
-		{
-		  DiaRetiro retiro= new DiaRetiro (0, diaSemana, horaDesde, horaHasta, intervalo);
-		  lstDiaRetiro.add(retiro);
-		  resultado= true;
+			lstDiaRetiro.add(diaPorParametro);
+			resultado = true;
 		}
 		return resultado;
 	}
