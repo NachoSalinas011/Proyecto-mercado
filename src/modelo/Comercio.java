@@ -102,7 +102,7 @@ public class Comercio extends Actor {
 				+ ", lstDiaRetiro=" + lstDiaRetiro + ", lstArticulo=" + lstArticulo + ", lstCarrito=" + lstCarrito
 				+ "]";
 	}
-	protected boolean validarIdentidicadorUnico(long cuit) {
+	public boolean validarIdentidicadorUnico(long cuit) {
 		boolean result = false; 
 		int suma=0, z=0, r=0, cont = 5; //Variables a usar
 		String cadenaCuit = String.valueOf(cuit); //Paso a String
