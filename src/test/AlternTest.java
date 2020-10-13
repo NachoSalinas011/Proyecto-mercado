@@ -170,6 +170,8 @@ public class AlternTest {
 		turnos = supermercado.traerTurnosOcupados(LocalDate.of(2020, 10, 13));
 		System.out.println(turnos.toString());
 		*/
+		
+		//Hola
 	}
 
 }
